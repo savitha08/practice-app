@@ -14,7 +14,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbPath = process.env.DATABASE_PATH || path.join(__dirname, "database.db");
 // const dbPath = path.join(__dirname, "database.db");
-
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend','dist','index.html'));
+});
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.log("Database connection failed:", err.message);
